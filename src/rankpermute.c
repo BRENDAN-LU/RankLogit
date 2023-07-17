@@ -19,7 +19,6 @@
 
 // Some forward declarations; see below for implementations
 static inline double pi_shrink_sum(double* arr, unsigned int arrlen, double D); 
-
 static inline void swap(double* x1, double* x2);
 
 // 'Sociological Methodology', vol.24 1994 p208
