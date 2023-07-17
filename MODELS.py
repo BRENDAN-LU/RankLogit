@@ -13,8 +13,9 @@ from typing import Tuple # 'iterable', see sklearn param_validation decorator
 # Cython code to generate, and perform relevent computations, across permutations of items
 import pyximport
 pyximport.install()
-import permute_jk
+import permute_jk 
 
+# import test1
 
 class TiedRankingLogitModel:
     """
@@ -88,6 +89,7 @@ class TiedRankingLogitModel:
             tied_ranks_terms = np.asarray([exponentiated_params[i] for i in tied_ranks_indexes])
             lower_ranks_sum = np.sum([exponentiated_params[i] for i in lower_ranks_indexes])
 
+            # llhood *= test1._sigma_permute(tied_ranks_terms, lower_ranks_sum)
             llhood *= permute_jk.permuteexpression(tied_ranks_terms, lower_ranks_sum)
             i -= 1
         

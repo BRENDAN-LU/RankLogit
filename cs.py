@@ -3,6 +3,7 @@ import shutil
 import sys
 
 build_files = [
+    r"_rankpermute.c",
     r"test1.cp310-win_amd64.pyd",
 ]
 

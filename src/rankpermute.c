@@ -18,9 +18,7 @@
 #include "rankpermute.h"
 
 // Some forward declarations; see below for implementations
-static inline double prod_shrinking_sum(double* arr, 
-                                        unsigned int arrlen, 
-                                        double D); 
+static inline double pi_shrink_sum(double* arr, unsigned int arrlen, double D); 
 
 static inline void swap(double* x1, double* x2);
 
@@ -50,7 +48,7 @@ double sigma_permute(double *arr, unsigned int arrlen, double D) {
     }
 
     double numerator = 1.0; 
-    double inv_denominator = prod_shrinking_sum(arr, arrlen, D); 
+    double inv_denominator = pi_shrink_sum(arr, arrlen, D); 
 
     // the numerator i constant across all p \in Q_k
     for (i = 0; i < arrlen; ++i) {
@@ -71,7 +69,7 @@ double sigma_permute(double *arr, unsigned int arrlen, double D) {
             }
 
             // this is a new permutation - we perform our computation on it
-            inv_denominator += prod_shrinking_sum(arr, arrlen, D); 
+            inv_denominator += pi_shrink_sum(arr, arrlen, D); 
 
             c[i] += 1; 
             i = 1;
@@ -98,9 +96,7 @@ double sigma_permute(double *arr, unsigned int arrlen, double D) {
 // down to r=1. 
 // At the i-th iteration, this saves the sum of the trailing i-th terms 
 // when computing the sum in the denominator term - we just need to add new term
-static inline double prod_shrinking_sum(double *arr, 
-                                        unsigned int arrlen, 
-                                        double D) 
+static inline double pi_shrink_sum(double *arr, unsigned int arrlen, double D) 
 {
 
     int i; 
