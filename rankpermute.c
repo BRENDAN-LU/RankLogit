@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 
-// Forward declaration of helper functions; see definition below
+// Forward declaration of helper functions; see definitions below
 double prod_shrinking_sum(double* arr, unsigned int len, double D); 
 void swap(double* x1, double* x2);
 
