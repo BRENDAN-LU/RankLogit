@@ -9,7 +9,7 @@
 //
 // Currently, the functions in this file are designed to be called from a 
 // higher level interface, which do some less intensive processing of the 
-// input data before using _rankpermute to make computations. 
+// input data before using rankpermute to make computations. 
 //-----------------------------------------------------------------------------
 
 #include <stdlib.h>
@@ -21,9 +21,10 @@ void swap(double* x1, double* x2);
 // 'Sociological Methodology', vol.24 1994 p208
 // For a fixed k, compute the middle sum 'sigma' term in eqn (8) across all Q_k
 //      We note that the second term in the denominator is fixed when k is fixed
-//      And we denote this term 'D'
-// At this step of the computation, we will have already exponentiated 
-// the \mu terms from the calling state 
+//      This term is denoted 'D'
+// At this step of the computation, we will have already pre-exponentiated 
+// the \mu terms from the calling state, which do not change 
+// during this computation.
 double sigma_permute(double *arr, unsigned int len, double D) {
 
     // This uses and iterative version of Heap's algorithm to generate 
