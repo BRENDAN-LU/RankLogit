@@ -13,6 +13,7 @@ import numpy as np
 
 import _utils
 
+
 class TiedRankingLogitModel:
     """
         Link to paper:
@@ -69,20 +70,21 @@ class TiedRankingLogitModel:
         exp_params = np.exp(self.parameters)
 
         enumerated = list(enumerate(observed_ranking))
+
         # start with highest number in input tuple, and iterate down.
         i = max(observed_ranking)
+
         while True:  # outer product
             tiedIdxs = [index for index, number in enumerated if number == i]
-            lwrIdxs = [index for index, number in enumerated if number < i]
-
             if len(tiedIdxs) == 0:
                 i -= 1
                 continue  # continue through - keep checking for lower integers
 
-            elif len(lwrIdxs) == 0:
-                break  # on the last ranking, and there is no llhood term
-
             else:
+                lwrIdxs = [index for index, number in enumerated if number < i]
+                if len(lwrIdxs) == 0:
+                    break  # on the last ranking, and there is no llhood term
+
                 tiedTerms = exp_params[tiedIdxs]
                 lwrTerms = np.sum(exp_params[lwrIdxs])
 
