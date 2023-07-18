@@ -8,14 +8,9 @@ Will need to implement partial likelihood estsimation here as well.
 """
 
 import numpy as np
-from typing import Tuple # 'iterable', see sklearn param_validation decorator
+from typing import Tuple 
 
-# Cython code to generate, and perform relevent computations, across permutations of items
-import pyximport
-pyximport.install()
-import permute_jk 
-
-# import test1
+from src import _utils
 
 class TiedRankingLogitModel:
     """
@@ -89,8 +84,7 @@ class TiedRankingLogitModel:
             tied_ranks_terms = np.asarray([exponentiated_params[i] for i in tied_ranks_indexes])
             lower_ranks_sum = np.sum([exponentiated_params[i] for i in lower_ranks_indexes])
 
-            # llhood *= test1._sigma_permute(tied_ranks_terms, lower_ranks_sum)
-            llhood *= permute_jk.permuteexpression(tied_ranks_terms, lower_ranks_sum)
+            llhood *= _utils._sigma_permute(tied_ranks_terms, lower_ranks_sum)
             i -= 1
         
         return llhood

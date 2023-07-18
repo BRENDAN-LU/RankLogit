@@ -11,11 +11,11 @@
 //
 // Currently, the functions in this file are designed to be called from a 
 // higher level interface, which do some less intensive processing of the 
-// input data before using rankpermute to make computations. 
+// input data before using utils to make computations. 
 //-----------------------------------------------------------------------------
 
 #include <stdlib.h>
-#include "rankpermute.h"
+#include "utils.h"
 
 // Some forward declarations; see below for implementations
 static inline double pi_shrink_sum(double* arr, unsigned int arrlen, double D); 

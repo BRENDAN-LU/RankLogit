@@ -3,8 +3,8 @@ from Cython.Build import cythonize
 
 extensions = [
     Extension(
-        "test1",
-        sources = ["src/_rankpermute.pyx", "src/rankpermute.c"],
+        "_utils",
+        sources = ["src/_utils.pyx", "src/utils.c"],
         language = "c",
     )
 ]

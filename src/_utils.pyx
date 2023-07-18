@@ -1,12 +1,12 @@
 """
 
-Cython wrapper for rankpermute C-utils
+Cython wrapper for C utility functions
 
 """
 
 import numpy as np
 
-cdef extern from "rankpermute.h": 
+cdef extern from "utils.h": 
     double sigma_permute(double*, unsigned int, double)
 
 # Python interface
