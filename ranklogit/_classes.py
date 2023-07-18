@@ -8,7 +8,7 @@ class, and parameter validation conventions.
 Will need to implement partial likelihood estsimation here as well. 
 """
 
-from numpy.typing import ArrayLike
+import numpy.typing as npt
 import numpy as np
 
 import _utils
@@ -43,11 +43,11 @@ class TiedRankingLogitModel:
 
     """
 
-    def __init__(self, parameters: ArrayLike[float]):
+    def __init__(self, parameters: npt.ArrayLike):
         self.parameters = np.asarray(parameters)
         self.j = len(parameters)  # keep record of number of categories
 
-    def evaluate_llhood(self, observed_ranking: ArrayLike[int]):
+    def evaluate_llhood(self, observed_ranking: npt.ArrayLike):
         """
         Valid observation inputs are numeric upwards, to a maximum of j, each in
         the list index corresponding to an outcome specified in the parameters
