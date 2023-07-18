@@ -27,11 +27,12 @@ class TiedRankingLogitModel:
             - with each index weight applied to a possible multinomial choice.
         Refer to 5.1 of the paper, in their provided example.
 
-        3) The parameters input should be an array, with each element corresponding
-        to the linear index weight (signed). This ordering of categories is
-        arbitrary, but should be the same as the observed_rankings input.
-            - it will be good to provide, in comments, a mapping of the index value
-                in the list to some category names.
+        3) The parameters input should be an array, with each element
+        corresponding to the linear index weight (signed). This ordering of
+        categories is arbitrary, but should be the same as the observed_rankings
+        input.
+            - it will be good to provide, in comments, a mapping of the index
+            value in the list to some category names.
             - Refer to page 210 for this mu_ij form
 
         4) Existimg implementation for estimation: Q estimates it by pivoting on
