@@ -6,8 +6,9 @@ The ranklogit model was actually part of a broader mixture model in a project.
 
 """
 
+import numpy.typing as npt
 import numpy as np
-from typing import Tuple 
+from typing import Iterable
 
 class LatentClassSpecificWrapperModel:
     """
@@ -18,10 +19,10 @@ class LatentClassSpecificWrapperModel:
     for the evaluate_llhood functions of the individual models. The number of 
     items in both arguments must be the same.
     """
-    def __init__(self, models: Tuple):
+    def __init__(self, models: Iterable):
         self.models = models
 
-    def evaluate_llhood(self, observations: Tuple):  
+    def evaluate_llhood(self, observations: npt.ArrayLike):  
         # observations should be a tuple of valid observations
         llhood: float = 1.0
         for i in range(len(self.models)):
@@ -34,12 +35,13 @@ class LCAMixtureModel:
     Now for a linearly weighted Bayesian mixture model, you can evaluate 
     posterior probabilities.
     """
-    def __init__(self, classes: int, models: Tuple, linear_weights: Tuple[float, ...]):
-        self.num_classes = classes
+    def __init__(self, models: Iterable, linear_weights: npt.ArrayLike):
+        assert (len(models) == len(linear_weights)), "Different number of models and weights"
+        self.num_classes = len(models)
         self.models = models
         self.priors = linear_weights
 
-    def evaluate_posterior_probability(self, observation):
+    def predict_proba(self, observation):
         # Ensure observation format matches the class specific model in the 
         # mixture model framework
         wghted_llhds: list[float] = list(range(self.num_classes))
@@ -53,7 +55,7 @@ class LCAMixtureModel:
 
         return output
 
-    def label_observation(self, observation):
+    def predict(self, observation):
         # Ensure observation format matches the class specific model in the 
         # mixture model framework
         weighted_llhoods: list[float] = list(range(self.num_classes))
@@ -73,29 +75,10 @@ class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     The observation integer should correspond to the index of the probabilities
     you provide. 
     """
-    def __init__(self, k: int, probabilities: Tuple[float, ...]):  # model parameters
+    def __init__(self, probabilities: npt.ArrayLike):  # model parameters
         # e.g. k=2 binomial, k=3 trinomial...
-        # in the probability parameter vector, you NEED to specify
-        # one explicit probability for each outcome
-        self.k = k
         self.probabilities = probabilities
-        self.valid_init = 0
-        
-    def check_valid_init(self):
-        """
-        Call before using this function object to ensure valid initialisation of the
-        underlying statistical model (correct observation, parameters, so forth)
-        """
-        num_probabilities_inputted = len(self.probabilities)
-        if num_probabilities_inputted == self.k and sum(self.probabilities) == 1:
-            self.valid_init = 1
 
     def evaluate_llhood(self, observation: int):
-        """
-        Returns None is the observation is not a valid input
-        """
-        if observation not in list(range(len(self.probabilities))):
-            return None
-        llhood = self.probabilities[int(observation)]
-        return llhood
+        return self.probabilities[int(observation)]
     

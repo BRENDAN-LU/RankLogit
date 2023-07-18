@@ -47,6 +47,8 @@ class TiedRankingLogitModel:
         self.parameters = np.asarray(parameters)
         self.j = len(parameters)  # keep record of number of categories
 
+        self.exp_params = np.exp(self.parameters)
+
     def evaluate_llhood(self, observed_ranking: npt.ArrayLike):
         """
         Valid observation inputs are numeric upwards, to a maximum of j, each in
@@ -62,11 +64,8 @@ class TiedRankingLogitModel:
 
         # This ensures we do not get stuck in an infinite loop below,
         # as ensures there are two distinct ranks.
-        # THIS IS NOT THE BEST WAY TO HANDLE IT - NEEDS FIX
         if len(set(observed_ranking)) == 1:
             return llhood
-
-        exp_params = np.exp(self.parameters)
 
         enumerated = list(enumerate(observed_ranking))
 
@@ -84,8 +83,8 @@ class TiedRankingLogitModel:
                 if len(lwrIdxs) == 0:
                     break  # on the last ranking, and there is no llhood term
 
-                tiedTerms = exp_params[tiedIdxs]
-                lwrTerms = np.sum(exp_params[lwrIdxs])
+                tiedTerms = self.exp_params[tiedIdxs]
+                lwrTerms = np.sum(self.exp_params[lwrIdxs])
 
                 llhood *= _sigmapermute(tiedTerms, lwrTerms)
                 i -= 1  # iterate down
