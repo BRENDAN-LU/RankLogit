@@ -6,7 +6,7 @@ Cython wrapper for C utility functions
 
 import numpy as np
 
-cdef extern from "utils.h": 
+cdef extern from "src/utils.h": 
     double sigma_permute(double*, unsigned int, double)
 
 # Python interface

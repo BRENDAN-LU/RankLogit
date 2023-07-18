@@ -1,8 +1,9 @@
 """
-Some other misc adhoc code which we used alongside ranklogit.
 
-The ranklogit model was actually part of a broader mixture model, 
-conducting a "latent class analysis". 
+Really rough miscallaneous adhoc code which was used alongside ranklogit.
+
+The ranklogit model was actually part of a broader mixture model in a project.
+
 """
 
 import numpy as np

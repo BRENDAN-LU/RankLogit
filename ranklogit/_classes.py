@@ -11,8 +11,7 @@ Will need to implement partial likelihood estsimation here as well.
 from numpy.typing import ArrayLike
 import numpy as np
 
-from src import _utils
-
+import _utils
 
 class TiedRankingLogitModel:
     """
