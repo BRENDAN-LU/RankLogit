@@ -1,2 +1,2 @@
 
-from._classes import TiedRankingLogitModel
+from ._classes import TiedRankingLogitModel
