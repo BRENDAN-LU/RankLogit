@@ -28,7 +28,7 @@ static inline void swap(double* x1, double* x2);
 // At this step of the computation, we will have already pre-exponentiated 
 // the \mu terms from the calling state, which do not change 
 // during this computation.
-double sigma_permute(double *arr, unsigned int arrlen, double D) {
+double sigmapermute(double *arr, unsigned int arrlen, double D) {
 
     // This uses and iterative version of Heap's algorithm to generate 
     // permutations of arr
@@ -95,8 +95,7 @@ double sigma_permute(double *arr, unsigned int arrlen, double D) {
 // down to r=1. 
 // At the i-th iteration, this saves the sum of the trailing i-th terms 
 // when computing the sum in the denominator term - we just need to add new term
-static inline double pi_shrink_sum(double *arr, unsigned int arrlen, double D) 
-{
+static inline double pi_shrink_sum(double *arr, unsigned int arrlen, double D) {
 
     int i; 
     double curr_sum = arr[arrlen - 1] + D; 

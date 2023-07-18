@@ -11,8 +11,7 @@ Will need to implement partial likelihood estsimation here as well.
 import numpy.typing as npt
 import numpy as np
 
-import _utils
-
+from ._utils import _sigmapermute
 
 class TiedRankingLogitModel:
     """
@@ -88,7 +87,7 @@ class TiedRankingLogitModel:
                 tiedTerms = exp_params[tiedIdxs]
                 lwrTerms = np.sum(exp_params[lwrIdxs])
 
-                llhood *= _utils._sigma_permute(tiedTerms, lwrTerms)
+                llhood *= _sigmapermute(tiedTerms, lwrTerms)
                 i -= 1  # iterate down
 
         return llhood

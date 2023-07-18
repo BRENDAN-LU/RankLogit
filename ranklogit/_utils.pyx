@@ -7,10 +7,10 @@ Cython wrapper for C utility functions
 import numpy as np
 
 cdef extern from "src/utils.h": 
-    double sigma_permute(double*, unsigned int, double)
+    double sigmapermute(double*, unsigned int, double)
 
 # Python interface
-def _sigma_permute(arr, D): 
+def _sigmapermute(arr, D): 
 
     # Cast input into appropriate np array
     # assuming np.float64 is C double
@@ -21,4 +21,4 @@ def _sigma_permute(arr, D):
 
     # Call function and return computation value 
     # do some explicit type casting to be extra safe
-    return <float>sigma_permute(&arr_copy[0], <unsigned int>arr_size, <double>D)
+    return <float>sigmapermute(&arr_copy[0], <unsigned int>arr_size, <double>D)
