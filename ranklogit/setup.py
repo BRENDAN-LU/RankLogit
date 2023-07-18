@@ -4,7 +4,7 @@ from Cython.Build import cythonize
 extensions = [
     Extension(
         "_utils",
-        sources = ["src/_utils.pyx", "src/utils.c"],
+        sources = ["_utils.pyx", "src/utils.c"],
         language = "c",
     )
 ]
