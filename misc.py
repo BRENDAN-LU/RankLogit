@@ -10,25 +10,6 @@ import numpy.typing as npt
 import numpy as np
 from typing import Iterable
 
-class LatentClassSpecificWrapperModel:
-    """
-    Here, you can wrap up the underlying statistical models used in each of the 
-    latent classes into one.
-
-    Observations should be a tuple of observation inputs, which are valid inputs 
-    for the evaluate_llhood functions of the individual models. The number of 
-    items in both arguments must be the same.
-    """
-    def __init__(self, models: Iterable):
-        self.models = models
-
-    def evaluate_llhood(self, observations: npt.ArrayLike):  
-        # observations should be a tuple of valid observations
-        llhood: float = 1.0
-        for i in range(len(self.models)):
-            llhood *= self.models[i].evaluate_llhood(observations[i])
-        return llhood
-
 
 class LCAMixtureModel:
     """
@@ -68,10 +49,32 @@ class LCAMixtureModel:
             output[i] = weighted_llhoods[i] / denom
 
         return np.argmax(output) + 1
-    
-    
+
+
+class _LatentClassSpecificWrapperModel:
+    """
+    Here, you can wrap up the underlying statistical models used in each of the 
+    latent classes into one.
+
+    Observations should be a tuple of observation inputs, which are valid inputs 
+    for the evaluate_llhood functions of the individual models. The number of 
+    items in both arguments must be the same.
+    """
+    def __init__(self, models: Iterable):
+        self.models = models
+
+    def evaluate_llhood(self, observations: npt.ArrayLike):  
+        # observations should be a tuple of valid observations
+        llhood: float = 1.0
+        for i in range(len(self.models)):
+            llhood *= self.models[i].evaluate_llhood(observations[i])
+        return llhood
+
+
 class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     """
+    A glorified dictionary in our pipeline. 
+    
     The observation integer should correspond to the index of the probabilities
     you provide. 
     """
