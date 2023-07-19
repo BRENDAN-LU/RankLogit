@@ -35,13 +35,7 @@ class LCAMixtureModel:
         return wghted_llhds / norm_factor
 
     def predict(self, observation):
-        wghted_llhds: list[float] = list(range(self.num_classes))
-        llhds = np.array(
-            [self.models[i].pmf(observation) for i in range(self.nclasses)]
-        )
-        wghted_llhds = np.dot(self.weights, llhds)
-        norm_factor = np.sum(wghted_llhds)
-        return np.argmax(wghted_llhds / norm_factor) + 1
+        return np.argmax(self.predict_proba) + 1
 
 
 class _LatentClassSpecificWrapperModel:

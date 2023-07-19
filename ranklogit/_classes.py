@@ -13,6 +13,7 @@ import numpy as np
 
 from ._utils import _sigmapermute
 
+
 class TiedRankingLogitModel:
     """
         Link to paper:
