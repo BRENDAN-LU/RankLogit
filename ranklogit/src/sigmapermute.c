@@ -30,12 +30,14 @@ static inline void swap(double* x1, double* x2);
 // during this computation.
 double sigmapermute(double *arr, unsigned int arrlen, double D) {
 
+    // keep compiler happy and not complain about signed/unsigned comparator
+    unsigned int i; 
+
     // This uses and iterative version of Heap's algorithm to generate 
     // permutations of arr
     // https://en.wikipedia.org/wiki/Heap%27s_algorithm
 
     // See wiki link - c is an encoding of the stack state
-    int i;
     unsigned int *c = (unsigned int*)malloc(arrlen*sizeof(unsigned int)); 
 
     if (c == NULL) {
@@ -97,7 +99,7 @@ double sigmapermute(double *arr, unsigned int arrlen, double D) {
 // when computing the sum in the denominator term - we just need to add new term
 static inline double pi_shrink_sum(double *arr, unsigned int arrlen, double D) {
 
-    int i; 
+    int i; // this needs to be signed otherwise loop below will be infinite
     double curr_sum = arr[arrlen - 1] + D; 
     double curr_prod = curr_sum; 
 

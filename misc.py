@@ -26,11 +26,11 @@ class LCAMixtureModel:
         self.weights = np.array(weights)
 
     def predict_proba(self, observation):
-        wghted_llhds: list[float] = list(range(self.num_classes))
+        wghted_llhds: list[float] = list(range(self.nclasses))
         llhds = np.array(
             [self.models[i].pmf(observation) for i in range(self.nclasses)]
         )
-        wghted_llhds = np.dot(self.weights, llhds)
+        wghted_llhds = self.weights * llhds
         norm_factor = np.sum(wghted_llhds)
         return wghted_llhds / norm_factor
 
@@ -38,7 +38,7 @@ class LCAMixtureModel:
         return np.argmax(self.predict_proba(observation)) + 1
 
 
-class _LatentClassSpecificWrapperModel:
+class LatentClassSpecificWrapperModel:
     """
     Here, you can wrap up the underlying statistical models used in each of the
     latent classes into one.
@@ -59,7 +59,7 @@ class _LatentClassSpecificWrapperModel:
         return llhood
 
 
-class _GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
+class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     """
     A glorified dictionary in our pipeline.
 
@@ -72,4 +72,4 @@ class _GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
         self.probabilities = probabilities
 
     def pmf(self, observation: int):
-        return self.probabilities[observation]
+        return self.probabilities[(int)(observation)]
