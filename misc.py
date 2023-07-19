@@ -28,7 +28,7 @@ class LCAMixtureModel:
         # mixture model framework
         wghted_llhds: list[float] = list(range(self.num_classes))
         for i in range(self.num_classes):
-            wghted_llhds[i] = self.priors[i] * self.models[i].evaluate_llhood(observation)
+            wghted_llhds[i] = self.priors[i] * self.models[i].pmf(observation)
         denom = sum(wghted_llhds)
 
         output: list[float] = []
@@ -42,7 +42,7 @@ class LCAMixtureModel:
         # mixture model framework
         weighted_llhoods: list[float] = list(range(self.num_classes))
         for i in range(self.num_classes):
-            weighted_llhoods[i] = self.priors[i] * self.models[i].evaluate_llhood(observation)
+            weighted_llhoods[i] = self.priors[i] * self.models[i].pmf(observation)
         denom = sum(weighted_llhoods)
 
         output: list[float] = list(range(self.num_classes))
@@ -64,15 +64,15 @@ class _LatentClassSpecificWrapperModel:
     def __init__(self, models: Iterable):
         self.models = models
 
-    def evaluate_llhood(self, observations: npt.ArrayLike):  
+    def pmf(self, observations: npt.ArrayLike):  
         # observations should be a tuple of valid observations
         llhood: float = 1.0
         for i in range(len(self.models)):
-            llhood *= self.models[i].evaluate_llhood(observations[i])
+            llhood *= self.models[i].pmf(observations[i])
         return llhood
 
 
-class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
+class _GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     """
     A glorified dictionary in our pipeline. 
     
@@ -83,6 +83,6 @@ class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
         # e.g. k=2 binomial, k=3 trinomial...
         self.probabilities = probabilities
 
-    def evaluate_llhood(self, observation: int):
-        return self.probabilities[int(observation)]
+    def pmf(self, observation: int):
+        return self.probabilities[observation]
     

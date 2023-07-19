@@ -49,7 +49,7 @@ class TiedRankingLogitModel:
 
         self.exp_params = np.exp(self.parameters)
 
-    def evaluate_llhood(self, observed_ranking: npt.ArrayLike):
+    def pmf(self, observed_ranking: npt.ArrayLike):
         """
         Valid observation inputs are numeric upwards, to a maximum of j, each in
         the list index corresponding to an outcome specified in the parameters
