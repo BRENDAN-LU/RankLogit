@@ -35,7 +35,7 @@ class LCAMixtureModel:
         return wghted_llhds / norm_factor
 
     def predict(self, observation):
-        return np.argmax(self.predict_proba) + 1
+        return np.argmax(self.predict_proba(observation)) + 1
 
 
 class _LatentClassSpecificWrapperModel:
