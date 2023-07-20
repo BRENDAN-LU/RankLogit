@@ -1,13 +1,3 @@
-"""
-
-Really rough miscallaneous adhoc code which was used alongside ranklogit.
-These are also used for testing, as we have ground truth computations on a 
-dataset. 
-
-The ranklogit model part of a broader mixture model. 
-
-"""
-
 import numpy.typing as npt
 import numpy as np
 from typing import Iterable

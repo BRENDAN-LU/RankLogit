@@ -1,0 +1,6 @@
+"""
+Log of Python dependencies to get egdriver working
+"""
+
+pandas 
+openpyxl

@@ -1,13 +1,3 @@
-"""
-The code here is quite clunky. 
-
-Sooner or later, I will rewrite it to be somewhat sklearn compatible, and delete 
-redundant things. sklearn has neat naming conventions, a nice estimator base 
-class, and parameter validation conventions. 
-
-Will need to implement partial likelihood estsimation here as well. 
-"""
-
 import numpy.typing as npt
 import numpy as np
 
