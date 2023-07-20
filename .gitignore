@@ -165,3 +165,6 @@ Labeller_Script.py
 
 # ignore Cython generated .c file for now 
 ranklogit/_utils.c
+
+# oopsie daisy
+git-filter-repo.py
