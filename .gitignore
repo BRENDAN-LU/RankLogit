@@ -159,9 +159,13 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# IGNORE SOME LOCAL SENSITIVE FILES
+# IGNORE SOME LOCAL SENSITIVE TESTING FILES
+# We use this in development to ensure mathematical correctness
 TEST/
 Labeller_Script.py
+test_csv.csv
+labelling_output.csv
+misc/~$config.xlsx
 
 # ignore Cython generated .c file for now 
 ranklogit/_utils.c

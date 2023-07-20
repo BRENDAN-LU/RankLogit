@@ -62,6 +62,7 @@ if data_file_path not in os.listdir():
     ])
 else: 
     data_df = pd.read_csv(data_file_path)
+    data_df.columns = data_df.columns.str.strip()
 
 input_col_names = config_df.iloc[1:,1]
 fail_to_find = []
