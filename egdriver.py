@@ -20,6 +20,7 @@ import ranklogit as rl
 GLOBALSTART = time.time()
 MWIDTHS = 80
 R = 3  # rounding
+R = 3  # rounding
 ERRSTRING = "ERROR!!!!!!!!!!!!!!!"
 
 CONFIGPATH = "misc\config.xlsx"
@@ -28,6 +29,7 @@ ROWBINOM = 1
 ROWRANK = slice(2, None)
 
 BINARYMAP = {2: 1, 1: 0}
+
 
 def disp_messages(messages: List[str]):
     print(f"Runtime: {round((time.time() - GLOBALSTART), R)}s".center(MWIDTHS, "-"))

@@ -20,9 +20,9 @@ class LCAMixtureModel:
         llhds = np.array(
             [self.models[i].pmf(observation) for i in range(self.nclasses)]
         )
-        wghted_llhds = self.weights * llhds
+        wghted_llhds = self.weights * llhds # elementwise product
         norm_factor = np.sum(wghted_llhds)
-        return wghted_llhds / norm_factor
+        return wghted_llhds / norm_factor # elementwise division by scalar
 
     def predict(self, observation):
         return np.argmax(self.predict_proba(observation)) + 1
