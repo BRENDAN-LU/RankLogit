@@ -153,3 +153,21 @@ disp_messages(
 data_df[config_df.iloc[ROWBINOM, 0]] = data_df.apply(
     lambda line: BINARYMAP[line[config_df.iloc[ROWBINOM, 0]]], axis=1
 )
+
+disp_messages(
+    [
+        "Creating new column and labelling data..."
+    ]
+)
+
+data_df["Latent Class Allocation"] = pd.NA
+labelling_start = time.time()
+data_df["Latent Class Allocation"] = data_df.apply(
+    lambda line: mixture_model.predict(
+        line[config_df.iloc[ROWBINOM, 0]], 
+        (
+
+        )
+    ),
+    axis = 1
+)
