@@ -37,7 +37,6 @@ class TiedRankingLogitModel:
     def __init__(self, parameters: npt.ArrayLike):
         self.parameters = np.asarray(parameters)
         self.j = len(parameters)  # keep record of number of categories
-
         self.exp_params = np.exp(self.parameters)
 
     def pmf(self, observed_ranking: npt.ArrayLike):
