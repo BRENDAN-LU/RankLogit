@@ -5,13 +5,13 @@
 // initially written by James P. Kelly.
 //
 // It generates permutations for a set of items, and performs a computation. 
-// This is the  intensive part in the computation of the general likelihood
+// This is the intensive part in the computation of the general likelihood
 // function for any pattern of tied items, proposed by Allison and Christakis 
 // (1994). 
 //
 // Currently, the functions in this file are designed to be called from a 
 // higher level interface, which do some less intensive processing of the 
-// input data before using utils to make computations. 
+// input data before calling the functions here.
 //-----------------------------------------------------------------------------
 
 #include <stdlib.h>

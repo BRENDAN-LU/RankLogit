@@ -20,7 +20,6 @@ import ranklogit as rl
 GLOBALSTART = time.time()
 MWIDTHS = 80
 R = 3  # rounding
-R = 3  # rounding
 ERRSTRING = "ERROR!!!!!!!!!!!!!!!"
 
 CONFIGPATH = "misc\config.xlsx"
@@ -29,6 +28,8 @@ ROWBINOM = 1
 ROWRANK = slice(2, None)
 
 BINARYMAP = {2: 1, 1: 0}
+
+OUTPUTNAMEAPPEND = "_LClassLabelling"
 
 
 def disp_messages(messages: List[str]):
@@ -154,20 +155,50 @@ data_df[config_df.iloc[ROWBINOM, 0]] = data_df.apply(
     lambda line: BINARYMAP[line[config_df.iloc[ROWBINOM, 0]]], axis=1
 )
 
-disp_messages(
-    [
-        "Creating new column and labelling data..."
-    ]
-)
+disp_messages(["Creating new column and labelling data..."])
 
 data_df["Latent Class Allocation"] = pd.NA
 labelling_start = time.time()
 data_df["Latent Class Allocation"] = data_df.apply(
     lambda line: mixture_model.predict(
-        line[config_df.iloc[ROWBINOM, 0]], 
         (
-
+            line[config_df.iloc[ROWBINOM, 0]],  # binom observation
+            (
+                line[config_df.loc["1a:"][0]],
+                line[config_df.loc["1b:"][0]],
+                line[config_df.loc["1c:"][0]],
+                line[config_df.loc["1d:"][0]],
+                line[config_df.loc["1e:"][0]],
+                line[config_df.loc["1f:"][0]],
+                line[config_df.loc["1g:"][0]],
+                line[config_df.loc["1h:"][0]],
+                line[config_df.loc["1i:"][0]],
+                line[config_df.loc["1j:"][0]],
+                line[config_df.loc["1k:"][0]],
+                line[config_df.loc["1l:"][0]],
+            ),
         )
     ),
-    axis = 1
+    axis=1,
 )
+label_time = time.time() - labelling_start
+
+disp_messages(
+    [
+        f"{len(data_df)} data points successfully labelled in {round(label_time, R)} seconds",
+        "Writing into output file now...",
+    ]
+)
+
+output_path = data_file_path[:-4] + OUTPUTNAMEAPPEND + ".csv"
+data_df.to_csv(output_path, index=False)
+
+disp_messages(
+    [
+        "All done! Look for output file: ",
+        f"{output_path}",
+        "Press ENTER to close this window.",
+    ]
+)
+
+input()

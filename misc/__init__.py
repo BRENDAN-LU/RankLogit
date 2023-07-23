@@ -1,4 +1,5 @@
-from ._classes import \
-                    LCAMixtureModel, \
-                    LatentClassSpecificWrapperModel, \
-                    GeneralMultinoulliModel
+from ._classes import (
+    LCAMixtureModel,
+    LatentClassSpecificWrapperModel,
+    GeneralMultinoulliModel,
+)

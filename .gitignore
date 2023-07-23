@@ -164,6 +164,7 @@ cython_debug/
 TEST/
 Labeller_Script.py
 test_csv.csv
+test_csv_LClassLabelling.csv
 labelling_output.csv
 misc/~$config.xlsx
 

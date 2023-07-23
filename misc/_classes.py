@@ -5,8 +5,7 @@ from typing import Iterable
 
 class LCAMixtureModel:
     """
-    Now for a linearly weighted Bayesian mixture model, you can evaluate
-    posterior probabilities.
+    Evaluate posterior probabilities for a linear mixture model.
     """
 
     def __init__(self, models: Iterable, weights: npt.ArrayLike):
@@ -20,9 +19,9 @@ class LCAMixtureModel:
         llhds = np.array(
             [self.models[i].pmf(observation) for i in range(self.nclasses)]
         )
-        wghted_llhds = self.weights * llhds # elementwise product
+        wghted_llhds = self.weights * llhds  # elementwise product
         norm_factor = np.sum(wghted_llhds)
-        return wghted_llhds / norm_factor # elementwise division by scalar
+        return wghted_llhds / norm_factor  # elementwise division by scalar
 
     def predict(self, observation):
         return np.argmax(self.predict_proba(observation)) + 1
@@ -30,11 +29,11 @@ class LCAMixtureModel:
 
 class LatentClassSpecificWrapperModel:
     """
-    Here, you can wrap up the underlying statistical models used in each of the
-    latent classes into one.
+    Wrap independent statistical models, for different features of an
+    observation, into one. This represents the model for one latent class.
 
-    Observations should be a tuple of observation inputs, which are valid inputs
-    for the evaluate_llhood functions of the individual models. The number of
+    Observations should be an Iterable of observation inputs, which are valid
+    inputs for the pmf functions of the individual models. The number of
     items in both arguments must be the same.
     """
 
@@ -51,14 +50,14 @@ class LatentClassSpecificWrapperModel:
 
 class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     """
-    A glorified dictionary in our pipeline.
+    A glorified dictionary, to work within the latent class wrapper.
 
     The observation integer should correspond to the index of the probabilities
     you provide.
     """
 
-    def __init__(self, probabilities: npt.ArrayLike):  # model parameters
-        # e.g. k=2 binomial, k=3 trinomial...
+    def __init__(self, probabilities: npt.ArrayLike):  # parameters
+        # e.g. len(probabilities)=2 binomial, k=3 trinomial, so on...
         self.probabilities = probabilities
 
     def pmf(self, observation: int):

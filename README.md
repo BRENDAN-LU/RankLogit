@@ -1,9 +1,23 @@
-# RankLogit - IN PROGRESS
-When performing 'Latent Class Analysis' segmentation using QSoftware, Q will automatically fit a 'Tied Ranking Logistic Model' to 'Rank' question types. Whilst some data might not be naturally or intuitively thought of as 'ranked', ranking transformations often uncover fascinating and valuable results and insights. Maximum Likelihood Estimation of this model can be accomplised with partial likelihood procedures, which are available in SAS, BMDP, SYSTAT and SPSS (Allison and Christakis, 1994). 
+# RankLogit
+This repository contains code to compute the likelihood function of a discrete logit choice model, proposed by statiscian Paul D. Allison and physician/sociologist Nicholas A. Christakis. It resembles a Multinomial Logit Model, but accomodates for tied choices by permuting the tied items, which (computationally) scales in $O(t!)$ fashion for each observation, where $t$ is the maximum number of tied items at any level. 
 
-Once parameterised, there are also some commercial programs that implement the likelihood. 1) The PHREG procedure in SAS, and 2) QSoftware (in the backend to compute posterior latent class probabilities). However, following segmentation analysis, one may wish to use the fitted model for further purposes such as labelling new  website traffic in real time, or to fit various models and compare the segment labelling outcomes in a CSV file or Jupyter notebook. In these cases, the commercial implementations are no good (not lightweight and cannot easily integrate into website back end; cost subscription money; typically have to work with more complex data file types specific to market research - not so easy to manipulate).
+Currently, in order to get _ranklogit_ working, one needs Cython, to compile some thinly wrapped C code - which performs the intensive part of the computation - into an importable Python extension. The _misc_ directory contains some other bits and bobs which were used alongside this model in a statistical commercial research project. The Python code is written in OOP, very loosely modelled around scipy and sklearn interfaces. 
 
-This repo contains an old bit of Python code which is a bit clunky, but contains a correct, and relatively quick implementation of the rather involved likelihood function. The Python module contains some clunky OOP code, and implementation of simple Bayesian logic, to use the computed likelihoods to estimate posterior latent class membership. 
+There is also a rough example script: _egdriver.py_, in the root directory, which provides some example use of the classes in _ranklogit_ and _misc_. We currently use this script, along with some test files (which are unfortunately gitignored, as they contain sensitive data), to run correctness tests every time this repository recieves updates. 
 
-**Reference:** 
-Allison, P.D. and Christakis, N.A. (1994). Logit Models for Sets of Ranked Items. Sociological Methodology, 24, p.199. doi:https://doi.org/10.2307/270983.
+## Estimation
+In the future, this repository _may_ also contain utilities to estimate the model, as the predominating method is with Maximum Likelihood Procedures. Feel free to reach out with any suggestions on the best way to approach this, as we do evaluate the likelihood function fairly efficiently, so it should either be a matter of implementing standard likelihood estimation procedures here, or integrating with an existing Python estimation framework. 
+
+The PHREG procedure in SAS can estimate this model. 
+
+## Other notes
+This method of modelling preferences can work well when analyzing data in which the number of discrete choice outcomes does not exceed 10. This form of the model was proposed and explored under sociological contexts, and had original applications in research related to physician decision-making, and end-of-life care. 
+
+Other sociological research, in which instances expresse some individual preference (or indifference) within a discrete set, or data resulting from ranking transformations applied on numeric/ordinal data amongst discrete categories, may lend themselves well to the application of this model. See the references below. 
+
+## Reference
+Allison, P.D. and Christakis, N.A. (1994). Logit Models for Sets of Ranked Items. Sociological Methodology, 24, p.199-228. doi: https://doi.org/10.2307/270983.
+
+Link to the paper: https://statisticalhorizons.com/wp-content/uploads/2022/01/AllisonChristakis.pdf
+
+See other: https://docs.displayr.com/wiki/Rank-Ordered_Logit_Model_With_Ties
