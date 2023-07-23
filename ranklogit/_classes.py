@@ -4,7 +4,7 @@ from typing import TypedDict, Tuple
 
 from ._utils import _sigmapermute
 
-CACHE_TIED_THRESHOLD = 7  # cache result if number of ties greater than this
+CACHE_TIED_THRESHOLD = 8  # cache result if number of ties greater than this
 
 
 class _TiedTermsCache(TypedDict):
@@ -88,7 +88,7 @@ class TiedRankingLogitModel:
                 if key_ in self.cache:
                     llhood *= self.cache[key_]
                     self.cache_hits += 1
-                    i -= 1
+                    i -= 1 # make sure we decrease iterator before continuing
                     continue
                 else:
                     cache_result = True
