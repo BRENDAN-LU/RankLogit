@@ -1,7 +1,15 @@
 import numpy.typing as npt
 import numpy as np
+from typing import TypedDict, Tuple
 
 from ._utils import _sigmapermute
+
+CACHE_TIED_THRESHOLD = 7  # cache result if number of ties greater than this
+
+
+class _TiedTermsCache(TypedDict):
+    terms: Tuple[Tuple[int], Tuple[int]]
+    sigmapermute: float
 
 
 class TiedRankingLogitModel:
@@ -38,6 +46,8 @@ class TiedRankingLogitModel:
         self.parameters = np.asarray(parameters)
         self.j = len(parameters)  # keep record of number of categories
         self.exp_params = np.exp(self.parameters)
+        self.cache: _TiedTermsCache = dict()
+        self.cache_hits = 0
 
     def pmf(self, observed_ranking: npt.ArrayLike):
         """
@@ -51,6 +61,7 @@ class TiedRankingLogitModel:
         # sequentially) is a lower level of preference.
 
         llhood: float = 1.0  # product of llhoods, so we start with 1
+        cache_result = False
 
         # This ensures we do not get stuck in an infinite loop below,
         # as ensures there are two distinct ranks.
@@ -68,15 +79,29 @@ class TiedRankingLogitModel:
                 i -= 1
                 continue  # continue through - keep checking for lower integers
 
-            else:
-                lwrIdxs = [index for index, number in enumerated if number < i]
-                if len(lwrIdxs) == 0:
-                    break  # on the last ranking, and there is no llhood term
+            lwrIdxs = [index for index, number in enumerated if number < i]
+            if len(lwrIdxs) == 0:
+                break  # on the last ranking, and there is no llhood term
 
-                tiedTerms = self.exp_params[tiedIdxs]
-                lwrTerms = np.sum(self.exp_params[lwrIdxs])
+            if len(tiedIdxs) >= CACHE_TIED_THRESHOLD:
+                key_ = (tuple(tiedIdxs), tuple(lwrIdxs))
+                if key_ in self.cache:
+                    llhood *= self.cache[key_]
+                    self.cache_hits += 1
+                    i -= 1
+                    continue
+                else:
+                    cache_result = True
 
-                llhood *= _sigmapermute(tiedTerms, lwrTerms)
-                i -= 1  # iterate down
+            tiedTerms = self.exp_params[tiedIdxs]
+            lwrTerms = np.sum(self.exp_params[lwrIdxs])
+
+            curr_sigmapermute = _sigmapermute(tiedTerms, lwrTerms)
+            llhood *= curr_sigmapermute
+
+            if cache_result:
+                self.cache[key_] = curr_sigmapermute
+
+            i -= 1  # iterate down
 
         return llhood
