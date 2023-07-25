@@ -1,5 +1,5 @@
+from math import exp  # avoid numpy overhead on our small sizes
 import numpy.typing as npt
-import numpy as np
 from typing import TypedDict, Tuple
 
 from ._utils import _sigmapermute
@@ -43,9 +43,9 @@ class TiedRankingLogitModel:
     """
 
     def __init__(self, parameters: npt.ArrayLike):
-        self.parameters = np.asarray(parameters)
+        self.parameters = parameters
         self.j = len(parameters)  # keep record of number of categories
-        self.exp_params = np.exp(self.parameters)
+        self.exp_params = [exp(x) for x in parameters]
         self.cache: _TiedTermsCache = dict()
         self.cache_hits = 0
 
@@ -93,8 +93,8 @@ class TiedRankingLogitModel:
                 else:
                     cache_result = True
 
-            tiedTerms = self.exp_params[tiedIdxs]
-            lwrTerms = np.sum(self.exp_params[lwrIdxs])
+            tiedTerms = [self.exp_params[i] for i in tiedIdxs]
+            lwrTerms = sum([self.exp_params[i] for i in lwrIdxs])
 
             curr_sigmapermute = _sigmapermute(tiedTerms, lwrTerms)
             llhood *= curr_sigmapermute
