@@ -87,7 +87,7 @@ class TiedRankingLogitModel:
                 if key_ in self.cache:
                     llhood *= self.cache[key_]
                     self.cache_hits += 1
-                    i -= 1 # make sure we decrease iterator before continuing
+                    i -= 1  # make sure we decrease iterator before continuing
                     continue
                 else:
                     cache_result = True

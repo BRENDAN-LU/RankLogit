@@ -168,5 +168,5 @@ test_csv_LClassLabelling.csv
 labelling_output.csv
 misc/~$config.xlsx
 
-# ignore Cython generated .c file for now 
-ranklogit/_utils.c
+# ignore Cython generated .c file
+# ranklogit/_utils.c

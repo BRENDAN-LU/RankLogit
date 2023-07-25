@@ -13,7 +13,7 @@ cdef extern from "src/utils.h":
 def _sigmapermute(list_, D): 
 
     # capture list length
-    cdef unsigned int arrlen = <unsigned int>len(list)
+    cdef unsigned int arrlen = <unsigned int>len(list_)
 
     # allocate memory for contiguous array data copy over
     cdef double* arr = <double*>malloc(arrlen * sizeof(double))
@@ -25,7 +25,7 @@ def _sigmapermute(list_, D):
     
     # pass pointer and length into C level function
     # store the result, so we can free memory before returning
-    float result = <float>sigmapermute(&arr[0], arrlen, <double>D)
+    result = <float>sigmapermute(&arr[0], arrlen, <double>D)
 
     free(arr) # release the memory
 

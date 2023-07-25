@@ -1,4 +1,5 @@
-from math import prod # quicker than numpy and functools reduce
+from itertools import tee
+from math import prod  # quicker than numpy and functools reduce
 from operator import mul
 from typing import Iterable, List
 
@@ -17,9 +18,9 @@ class LCAMixtureModel:
     def predict_proba(self, observation: Iterable) -> List[float]:
         wghted_llhds: list[float] = list(range(self.nclasses))
         llhds = [self.models[i].pmf(observation) for i in range(self.nclasses)]
-        wghted_llhds = map(mul, self.weights, llhds)
-        norm_factor = sum(wghted_llhds)
-        return [x/norm_factor for x in wghted_llhds]
+        wghted_llhds, wghted_llhds_copy = tee(map(mul, self.weights, llhds))
+        norm_factor = sum(wghted_llhds_copy)
+        return [x / norm_factor for x in wghted_llhds]
 
     def predict(self, observation):
         probs = self.predict_proba(observation)
@@ -41,7 +42,9 @@ class LatentClassSpecificWrapperModel:
 
     def pmf(self, observations: Iterable):
         # observations should be a tuple of valid observations
-        return prod([self.models[i].pmf(observations[i]) for i in range(self.nclasses)])
+        return prod(
+            [self.models[i].pmf(observations[i]) for i in range(len(observations))]
+        )
 
 
 class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'

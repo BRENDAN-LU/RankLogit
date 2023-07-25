@@ -202,9 +202,11 @@ disp_messages(
 )
 
 # add any other debug stuff here -----------------------------------------------
-print(latent_class_models[0].models[1].cache)
-print("\n\n")
-print(latent_class_models[0].models[1].cache_hits)
+# print(latent_class_models[0].models[1].cache)
+# print("\n\n")
+# print(latent_class_models[0].models[1].cache_hits)
+# print("\n\n")
+# print(len(data_df.loc[data_df["segmentsTPFCT"] != data_df["Latent Class Allocation"]]))
 # ------------------------------------------------------------------------------
 
 input()
