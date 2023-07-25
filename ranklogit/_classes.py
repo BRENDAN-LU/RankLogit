@@ -1,6 +1,5 @@
 from math import exp  # avoid numpy overhead on our small sizes
-import numpy.typing as npt
-from typing import TypedDict, Tuple
+from typing import Iterable, TypedDict, Tuple
 
 from ._utils import _sigmapermute
 
@@ -42,14 +41,14 @@ class TiedRankingLogitModel:
 
     """
 
-    def __init__(self, parameters: npt.ArrayLike):
+    def __init__(self, parameters: Iterable):
         self.parameters = parameters
         self.j = len(parameters)  # keep record of number of categories
         self.exp_params = [exp(x) for x in parameters]
         self.cache: _TiedTermsCache = dict()
         self.cache_hits = 0
 
-    def pmf(self, observed_ranking: npt.ArrayLike):
+    def pmf(self, observed_ranking: Iterable):
         """
         Valid observation inputs are numeric upwards, to a maximum of j, each in
         the list index corresponding to an outcome specified in the parameters

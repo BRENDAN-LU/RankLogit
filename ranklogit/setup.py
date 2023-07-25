@@ -6,7 +6,7 @@ extensions = [
         "_utils",
         sources=["_utils.pyx", "src/sigmapermute.c"],
         language="c",
-        extra_compile_args=["/arch:AVX2", "/fp:fast", "/Qpar"],
+        # extra_compile_args=["/arch:AVX2", "/fp:fast", "/Qpar"],
     )
 ]
 
