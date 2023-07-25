@@ -1,6 +1,6 @@
-import numpy.typing as npt
-import numpy as np
-from typing import Iterable
+from math import prod # quicker than numpy and functools reduce
+from operator import mul
+from typing import Iterable, List
 
 
 class LCAMixtureModel:
@@ -8,23 +8,22 @@ class LCAMixtureModel:
     Evaluate posterior probabilities for a linear mixture model.
     """
 
-    def __init__(self, models: Iterable, weights: npt.ArrayLike):
+    def __init__(self, models: Iterable, weights: Iterable):
         assert len(models) == len(weights), "Different number of models and weights"
         self.nclasses = len(models)
         self.models = models
-        self.weights = np.array(weights)
+        self.weights = weights
 
-    def predict_proba(self, observation):
+    def predict_proba(self, observation: Iterable) -> List[float]:
         wghted_llhds: list[float] = list(range(self.nclasses))
-        llhds = np.array(
-            [self.models[i].pmf(observation) for i in range(self.nclasses)]
-        )
-        wghted_llhds = self.weights * llhds  # elementwise product
-        norm_factor = np.sum(wghted_llhds)
-        return wghted_llhds / norm_factor  # elementwise division by scalar
+        llhds = [self.models[i].pmf(observation) for i in range(self.nclasses)]
+        wghted_llhds = map(mul, self.weights, llhds)
+        norm_factor = sum(wghted_llhds)
+        return [x/norm_factor for x in wghted_llhds]
 
     def predict(self, observation):
-        return np.argmax(self.predict_proba(observation)) + 1
+        probs = self.predict_proba(observation)
+        return max(range(len(probs)), key=probs.__getitem__) + 1
 
 
 class LatentClassSpecificWrapperModel:
@@ -40,12 +39,9 @@ class LatentClassSpecificWrapperModel:
     def __init__(self, models: Iterable):
         self.models = models
 
-    def pmf(self, observations: npt.ArrayLike):
+    def pmf(self, observations: Iterable):
         # observations should be a tuple of valid observations
-        llhood: float = 1.0
-        for i in range(len(self.models)):
-            llhood *= self.models[i].pmf(observations[i])
-        return llhood
+        return prod([self.models[i].pmf(observations[i]) for i in range(self.nclasses)])
 
 
 class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
@@ -56,7 +52,7 @@ class GeneralMultinoulliModel:  # multinomial but n=1, hence 'noulli'
     you provide.
     """
 
-    def __init__(self, probabilities: npt.ArrayLike):  # parameters
+    def __init__(self, probabilities: Iterable):  # parameters
         # e.g. len(probabilities)=2 binomial, k=3 trinomial, so on...
         self.probabilities = probabilities
 
