@@ -4,12 +4,15 @@ Cython wrapper for C utility function
 
 """
 
+cimport cython
 from libc.stdlib cimport malloc, free
 
 cdef extern from "src/utils.h": 
     double sigmapermute(double*, unsigned int, double)
 
-# Python interface; internal use C-speed helper function 
+# Python interface; internal use C-speed helper function
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def _sigmapermute(list_, D): 
 
     # capture list length
