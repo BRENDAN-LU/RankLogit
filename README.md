@@ -6,7 +6,7 @@ In order to get _ranklogit_ working from source here, one needs an appropriate C
 There is also a rough example script: _egdriver.py_, in the root directory, which provides some example use of the classes in _ranklogit_ and _misc_. This is the script we use, along with some test files (which are unfortunately gitignored, as they contain sensitive data), to run correctness tests every time this repository recieves updates. 
 
 ## Estimation
-IN PROGRESS. Soon, this repository _will_ also contain utilities to estimate the model. The PHREG procedure in SAS can estimate this form of the model, by specifying TIES=EXACT. 
+IN PROGRESS. Soon, this repository will also contain utilities to estimate the model. The PHREG procedure in SAS can estimate this form of the model, by specifying TIES=EXACT. 
 
 ## Other notes
 _ranklogit_ can work well, and reasonably quickly, when modelling data in which the number of discrete choice outcomes does not exceed 10-15. This form of the model was proposed and explored under sociological contexts, and had original applications in research related to physician decision-making, and end-of-life care. 
