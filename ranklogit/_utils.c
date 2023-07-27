@@ -1211,6 +1211,8 @@ static int __Pyx_check_binary_version(void);
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
+/* Module declarations from 'cython' */
+
 /* Module declarations from 'libc.string' */
 
 /* Module declarations from 'libc.stdlib' */
@@ -1256,9 +1258,9 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_codeobj__2;
 /* Late includes */
 
-/* "_utils.pyx":13
- * 
- * # Python interface; internal use C-speed helper function
+/* "_utils.pyx":16
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
  * def _sigmapermute(list_, D):             # <<<<<<<<<<<<<<
  * 
  *     # capture list length
@@ -1299,11 +1301,11 @@ static PyObject *__pyx_pw_6_utils_1_sigmapermute(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_D)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_sigmapermute", 1, 2, 2, 1); __PYX_ERR(0, 13, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_sigmapermute", 1, 2, 2, 1); __PYX_ERR(0, 16, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_sigmapermute") < 0)) __PYX_ERR(0, 13, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_sigmapermute") < 0)) __PYX_ERR(0, 16, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1316,7 +1318,7 @@ static PyObject *__pyx_pw_6_utils_1_sigmapermute(PyObject *__pyx_self, PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_sigmapermute", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 13, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_sigmapermute", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 16, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("_utils._sigmapermute", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1347,17 +1349,17 @@ static PyObject *__pyx_pf_6_utils__sigmapermute(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_sigmapermute", 0);
 
-  /* "_utils.pyx":16
+  /* "_utils.pyx":19
  * 
  *     # capture list length
  *     cdef unsigned int arrlen = <unsigned int>len(list_)             # <<<<<<<<<<<<<<
  * 
  *     # allocate memory for contiguous array data copy over
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_list_); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_list_); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_v_arrlen = ((unsigned int)__pyx_t_1);
 
-  /* "_utils.pyx":19
+  /* "_utils.pyx":22
  * 
  *     # allocate memory for contiguous array data copy over
  *     cdef double* arr = <double*>malloc(arrlen * sizeof(double))             # <<<<<<<<<<<<<<
@@ -1366,7 +1368,7 @@ static PyObject *__pyx_pf_6_utils__sigmapermute(CYTHON_UNUSED PyObject *__pyx_se
  */
   __pyx_v_arr = ((double *)malloc((__pyx_v_arrlen * (sizeof(double)))));
 
-  /* "_utils.pyx":23
+  /* "_utils.pyx":26
  *     # iterate list and copy over data
  *     cdef unsigned int i
  *     for i in range(arrlen):             # <<<<<<<<<<<<<<
@@ -1378,34 +1380,34 @@ static PyObject *__pyx_pf_6_utils__sigmapermute(CYTHON_UNUSED PyObject *__pyx_se
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "_utils.pyx":24
+    /* "_utils.pyx":27
  *     cdef unsigned int i
  *     for i in range(arrlen):
  *         arr[i] = list_[i]             # <<<<<<<<<<<<<<
  * 
  *     # pass pointer and length into C level function
  */
-    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_list_, __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetItemInt(__pyx_v_list_, __pyx_v_i, unsigned int, 0, __Pyx_PyInt_From_unsigned_int, 0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
+    __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     (__pyx_v_arr[__pyx_v_i]) = __pyx_t_6;
   }
 
-  /* "_utils.pyx":28
+  /* "_utils.pyx":31
  *     # pass pointer and length into C level function
  *     # store the result, so we can free memory before returning
  *     result = <float>sigmapermute(&arr[0], arrlen, <double>D)             # <<<<<<<<<<<<<<
  * 
  *     free(arr) # release the memory
  */
-  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_D); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
-  __pyx_t_5 = PyFloat_FromDouble(((float)sigmapermute((&(__pyx_v_arr[0])), __pyx_v_arrlen, ((double)__pyx_t_6)))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_D); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(((float)sigmapermute((&(__pyx_v_arr[0])), __pyx_v_arrlen, ((double)__pyx_t_6)))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_v_result = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "_utils.pyx":30
+  /* "_utils.pyx":33
  *     result = <float>sigmapermute(&arr[0], arrlen, <double>D)
  * 
  *     free(arr) # release the memory             # <<<<<<<<<<<<<<
@@ -1414,7 +1416,7 @@ static PyObject *__pyx_pf_6_utils__sigmapermute(CYTHON_UNUSED PyObject *__pyx_se
  */
   free(__pyx_v_arr);
 
-  /* "_utils.pyx":32
+  /* "_utils.pyx":35
  *     free(arr) # release the memory
  * 
  *     return result             # <<<<<<<<<<<<<<
@@ -1424,9 +1426,9 @@ static PyObject *__pyx_pf_6_utils__sigmapermute(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "_utils.pyx":13
- * 
- * # Python interface; internal use C-speed helper function
+  /* "_utils.pyx":16
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
  * def _sigmapermute(list_, D):             # <<<<<<<<<<<<<<
  * 
  *     # capture list length
@@ -1507,7 +1509,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 26, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1517,17 +1519,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "_utils.pyx":13
- * 
- * # Python interface; internal use C-speed helper function
+  /* "_utils.pyx":16
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
  * def _sigmapermute(list_, D):             # <<<<<<<<<<<<<<
  * 
  *     # capture list length
  */
-  __pyx_tuple_ = PyTuple_Pack(6, __pyx_n_s_list, __pyx_n_s_D, __pyx_n_s_arrlen, __pyx_n_s_arr, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(6, __pyx_n_s_list, __pyx_n_s_D, __pyx_n_s_arrlen, __pyx_n_s_arr, __pyx_n_s_i, __pyx_n_s_result); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_utils_pyx, __pyx_n_s_sigmapermute, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_utils_pyx, __pyx_n_s_sigmapermute, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1806,16 +1808,16 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "_utils.pyx":13
- * 
- * # Python interface; internal use C-speed helper function
+  /* "_utils.pyx":16
+ * @cython.boundscheck(False)
+ * @cython.wraparound(False)
  * def _sigmapermute(list_, D):             # <<<<<<<<<<<<<<
  * 
  *     # capture list length
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6_utils_1_sigmapermute, NULL, __pyx_n_s_utils); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6_utils_1_sigmapermute, NULL, __pyx_n_s_utils); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sigmapermute, __pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sigmapermute, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "_utils.pyx":1
